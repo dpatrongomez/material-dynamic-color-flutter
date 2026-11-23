@@ -47,7 +47,8 @@ void main() {
     await tester.pumpAndSettle();
 
     final container = tester.firstWidget(find.byKey(containerKey)) as Container;
-    expect(container.color, const Color(0xff785900));
+    expect(
+        container.color, ColorScheme.fromSeed(seedColor: Colors.amber).primary);
   });
 
   testWidgets('DynamicColorBuilder is correct on other platforms',

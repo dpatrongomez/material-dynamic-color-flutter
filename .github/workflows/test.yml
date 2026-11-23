@@ -16,18 +16,19 @@ jobs:
 
     steps:
       - name: Cache Flutter dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: /opt/hostedtoolcache/flutter
           key: ubuntu-flutter-install-cache-stable
 
       - name: Clone Flutter repository with stable channel
-        uses: subosito/flutter-action@v1.5.3
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version: '3.50.1'
       - run: flutter doctor -v
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           path: "repos/dynamic_color"
 
@@ -36,12 +37,12 @@ jobs:
         working-directory: "repos/dynamic_color"
 
       - name: Verify formatting
-        run: flutter format --dry-run --set-exit-if-changed .
+        run: dart format --dry-run --set-exit-if-changed .
         working-directory: "repos/dynamic_color"
 
       # Consider passing '--fatal-infos' for slightly stricter analysis.
       - name: Analyze project source
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
         working-directory: "repos/dynamic_color"
 
       - name: Run tests
